@@ -6,7 +6,7 @@
     "applications": [
         {
             "name": "test-klave-sdk",
-            "slug": "testKlaveSDK",
+            "slug": "test-klave-sdk",
             "version": "0.0.1",
             "rootDir": "assembly/apps/test-klave-sdk"
         }
