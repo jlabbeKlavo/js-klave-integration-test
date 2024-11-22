@@ -8,7 +8,7 @@
             "name": "test-klave-sdk",
             "slug": "testKlaveSDK",
             "version": "0.0.1",
-            "rootDir": "/apps/test-klave-sdk"
+            "rootDir": "assembly/apps/test-klave-sdk"
         }
     ]
 }
