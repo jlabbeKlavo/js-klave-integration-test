@@ -1,6 +1,6 @@
 const { klaveTransaction, klaveCloseConnection, klaveOpenConnection } = require('../../../klave_network');
 
-const fqdn = "test_sdk_smart_contract_2";
+const fqdn = "main.7a032d48.test-klave-sdk.IntegrationTests.klave.network";
 
 const testHTTPS_RandomNumber = async () => {
     console.log("testHTTPS_RandomNumber");
@@ -11,7 +11,7 @@ const testHTTPS_RandomNumber = async () => {
         let testInput = {
             "useDefault": true
           };
-        test_results = await klaveTransaction(fqdn,"grabRandomNumbers", testInput);      
+        test_results = await klaveTransaction(FQDN,"grabRandomNumbers", testInput);      
         console.assert(test_results.length == 5, "testHTTPS_RandomNumber failed")
     }
     klaveCloseConnection();
@@ -26,7 +26,7 @@ const testHTTPS_BitcoinPrice = async () => {
         let testInput = {
             "useDefault": true
           };
-        test_results = await klaveTransaction(fqdn,"grabBitcoinPrice", testInput);      
+        test_results = await klaveTransaction(FQDN,"grabBitcoinPrice", testInput);      
     }
     klaveCloseConnection();
 }

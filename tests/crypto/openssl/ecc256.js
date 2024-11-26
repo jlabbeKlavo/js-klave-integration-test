@@ -19,8 +19,8 @@ const testOpenSslImportPrivateKeySignWithKlaveAndVerifyLocally = async () => {
   let user_connected = await klaveOpenConnection();
   if (user_connected)
   {
-    let app_id = "test_sdk";
-    let fqdn = "test_sdk_smart_contract";
+    let app_id = "test-klave-sdk";
+    let fqdn = "test-klave-sdk-smart-contract-1.jlabbe.klave.network";
     //deploy the app
     let wasm_bytes_b64 = (fs.readFileSync(WASM_TESTKLAVESDK)).toString();
     await klaveDeployApp(app_id, fqdn, wasm_bytes_b64);
@@ -46,7 +46,7 @@ const testOpenSslImportPrivateKeySignWithKlaveAndVerifyLocally = async () => {
     };
 
     let argsKeyInput = JSON.stringify(importInput);    
-    let import_results = klaveTransaction(fqdn,"testImportKey", argsKeyInput);
+    let import_results = klaveTransaction(FQDN,"testImportKey", argsKeyInput);
 
     // //delete the test folder
     // fs.readdirSync(LOCAL_TEST_DIR).forEach(f => fs.rmSync(`${LOCAL_TEST_DIR}/${f}`));
@@ -54,7 +54,7 @@ const testOpenSslImportPrivateKeySignWithKlaveAndVerifyLocally = async () => {
     // //sign with the imported private key
     // let dataToSign = "Hello World";
     // let argsSignInput = {"keyName":keyName,"input":dataToSign};
-    // let sign_request = klaveRequest(fqdn,"ecdsaSign",argsSignInput);
+    // let sign_request = klaveRequest(FQDN,"ecdsaSign",argsSignInput);
     // let signature = await applyTransaction(sign_request);
     // console.log('Signature: ', signature);
     // try {
@@ -123,7 +123,7 @@ const testOpenSslImportPrivateKeySignWithKlaveAndVerifyLocally = async () => {
 //       let publicKeyb64 = readKeyFile(KLAVE_PUBLIC_KEY_EC_EXAMPLE);
 //       let keyName = "publicKey2";
 //       let argsKeyInput = confidencialKeyInput("pkcs8",publicKeyb64, true, ["verify"], keyName);
-//       let import_public_key_request = klaveRequest(fqdn,"importKey",argsKeyInput);
+//       let import_public_key_request = klaveRequest(FQDN,"importKey",argsKeyInput);
 //       let import_results = await applyTransaction(import_public_key_request);
   
 //       //delete the test folder
@@ -174,7 +174,7 @@ const testOpenSslImportPrivateKeySignWithKlaveAndVerifyLocally = async () => {
 //       let b64Asn1Signature = Buffer.from(hexAsn1Signature, 'hex').toString('base64');
   
 //       let argsVerificationInput = {"keyName":keyName, "data":jwtB64, "signature":b64Asn1Signature};
-//       let verification_request = klaveRequest(fqdn,"verify",argsVerificationInput);
+//       let verification_request = klaveRequest(FQDN,"verify",argsVerificationInput);
 //       let verification = await applyTransaction(verification_request);
   
 //       console.log("signature has been verified by Klave: " + verification);
@@ -219,13 +219,13 @@ const testOpenSslImportPrivateKeySignWithKlaveAndVerifyLocally = async () => {
   
 //       //format is 2, algorithm is 0, extractable is 0
 //       let argsKeyInput = confidencialKeyRawInput(keyName,2,exportedRawPrivateKey,0,1);
-//       let import_private_key_request = klaveRequest(fqdn,"importRawKey",argsKeyInput);
+//       let import_private_key_request = klaveRequest(FQDN,"importRawKey",argsKeyInput);
 //       let import_results = await applyTransaction(import_private_key_request);
   
 //       //sign with the imported private key
 //       let dataToSign = "Hello World";
 //       let argsSignInput = {"keyName":keyName,"input":dataToSign};
-//       let sign_request = klaveRequest(fqdn,"sign",argsSignInput);
+//       let sign_request = klaveRequest(FQDN,"sign",argsSignInput);
 //       let signature = await applyTransaction(sign_request);
 //       console.log('Signature: ', signature);
 //       try {
@@ -318,13 +318,13 @@ const testOpenSslImportPrivateKeySignWithKlaveAndVerifyLocally = async () => {
   
 //       //format is 2, algorithm is 0, extractable is 0
 //       let argsKeyInput = confidencialKeyInput("pkcs8",privateKeyb64, true, ["sign"], keyName);
-//       let import_private_key_request = klaveRequest(fqdn,"importKey",argsKeyInput);
+//       let import_private_key_request = klaveRequest(FQDN,"importKey",argsKeyInput);
 //       let import_results = await applyTransaction(import_private_key_request);
   
 //       //sign with the imported private key - to be finished
 //       let dataToSign = "Hello World";
 //       let argsSignInput = {"keyName":keyName,"input":dataToSign};
-//       let sign_request = klaveRequest(fqdn,"sign",argsSignInput);
+//       let sign_request = klaveRequest(FQDN,"sign",argsSignInput);
 //       let signature = await applyTransaction(sign_request);
 //       console.log('Signature: ', signature);
 //       try {
@@ -387,7 +387,7 @@ const testOpenSslImportPrivateKeySignWithKlaveAndVerifyLocally = async () => {
 //       const exportedPublicKeyb64 = (Buffer.from(exportedPublicKey)).toString('base64');
   
 //       let argsKeyInput = confidencialKeyInput("pkcs8",exportedPublicKeyb64, true, ["verify"], keyName);
-//       let import_public_key_request = klaveRequest(fqdn,"importKey",argsKeyInput);
+//       let import_public_key_request = klaveRequest(FQDN,"importKey",argsKeyInput);
 //       let import_results = await applyTransaction(import_public_key_request);
   
 //       //delete the test folder
@@ -411,7 +411,7 @@ const testOpenSslImportPrivateKeySignWithKlaveAndVerifyLocally = async () => {
   
 //       //verify the signature with klave
 //       let argsVerificationInput = {"keyName":keyName, "data":dataToSignB64, "signature":subtle_signature_base64};
-//       let verification_request = klaveRequest(fqdn,"verify",argsVerificationInput);
+//       let verification_request = klaveRequest(FQDN,"verify",argsVerificationInput);
 //       let verification = await applyTransaction(verification_request);
   
 //       console.log("signature has been verified by Klave: " + verification);

@@ -3,7 +3,7 @@ const fs = require('fs');
 
 //wasm to deploy must be copied post generation coming from yarn build command
 const app_id = "test_sdk";
-const fqdn = "test_sdk_smart_contract_2";
+const fqdn = "main.7a032d48.test-klave-sdk.IntegrationTests.klave.network";
 const WASM_TESTKLAVESDK = './config/wasm/testklavesdk_b64';
 
 const testRunCmdCryptoSDKApp = async () => {
@@ -14,22 +14,22 @@ const testRunCmdCryptoSDKApp = async () => {
     let testInput = {
       "useDefault":true
     };    
-    let test_results = await klaveTransaction(fqdn,"testECDSA_256_PKCS8_KeyECC", JSON.stringify(testInput));
-    test_results = await klaveTransaction(fqdn,"testECDSA_384_PKCS8_KeyECC", JSON.stringify(testInput));
-    test_results = await klaveTransaction(fqdn,"testECDSA_521_PKCS8_KeyECC", JSON.stringify(testInput));
-    test_results = await klaveTransaction(fqdn,"testECDSA_256_PKCS8_SC", JSON.stringify(testInput));
-    test_results = await klaveTransaction(fqdn,"testECDSA_256_SEC1_SC", JSON.stringify(testInput));
-    test_results = await klaveTransaction(fqdn,"testAES_128_RAW_KeyAES", JSON.stringify(testInput));
+    let test_results = await klaveTransaction(FQDN,"testECDSA_256_PKCS8_KeyECC", JSON.stringify(testInput));
+    test_results = await klaveTransaction(FQDN,"testECDSA_384_PKCS8_KeyECC", JSON.stringify(testInput));
+    test_results = await klaveTransaction(FQDN,"testECDSA_521_PKCS8_KeyECC", JSON.stringify(testInput));
+    test_results = await klaveTransaction(FQDN,"testECDSA_256_PKCS8_SC", JSON.stringify(testInput));
+    test_results = await klaveTransaction(FQDN,"testECDSA_256_SEC1_SC", JSON.stringify(testInput));
+    test_results = await klaveTransaction(FQDN,"testAES_128_RAW_KeyAES", JSON.stringify(testInput));
 
     testInput = {
       "useDefault":false
     };  
-    test_results = await klaveTransaction(fqdn,"testECDSA_256_PKCS8_KeyECC", JSON.stringify(testInput));
-    test_results = await klaveTransaction(fqdn,"testECDSA_384_PKCS8_KeyECC", JSON.stringify(testInput));
-    test_results = await klaveTransaction(fqdn,"testECDSA_521_PKCS8_KeyECC", JSON.stringify(testInput));
-    test_results = await klaveTransaction(fqdn,"testECDSA_256_PKCS8_SC", JSON.stringify(testInput));
-    test_results = await klaveTransaction(fqdn,"testECDSA_256_SEC1_SC", JSON.stringify(testInput));
-    test_results = await klaveTransaction(fqdn,"testAES_128_RAW_KeyAES", JSON.stringify(testInput));
+    test_results = await klaveTransaction(FQDN,"testECDSA_256_PKCS8_KeyECC", JSON.stringify(testInput));
+    test_results = await klaveTransaction(FQDN,"testECDSA_384_PKCS8_KeyECC", JSON.stringify(testInput));
+    test_results = await klaveTransaction(FQDN,"testECDSA_521_PKCS8_KeyECC", JSON.stringify(testInput));
+    test_results = await klaveTransaction(FQDN,"testECDSA_256_PKCS8_SC", JSON.stringify(testInput));
+    test_results = await klaveTransaction(FQDN,"testECDSA_256_SEC1_SC", JSON.stringify(testInput));
+    test_results = await klaveTransaction(FQDN,"testAES_128_RAW_KeyAES", JSON.stringify(testInput));
 
     //Generate a key in a first transaction and use it in a second one
     testInput = {
@@ -42,17 +42,17 @@ const testRunCmdCryptoSDKApp = async () => {
         "keyUsages": ["encrypt", "decrypt"]
       }
     };
-    test_results = await klaveTransaction(fqdn,"generateKey", testInput);
+    test_results = await klaveTransaction(FQDN,"generateKey", testInput);
 
     testInput = {
       "keyName":"testKey",
     };
-    test_results = await klaveTransaction(fqdn,"testAES_128_RAW_KeyAES_external_key", testInput);
+    test_results = await klaveTransaction(FQDN,"testAES_128_RAW_KeyAES_external_key", testInput);
 
     testInput = {
       "keyName":"testKey",
     };
-    test_results = await klaveTransaction(fqdn,"testSHA_256", testInput);
+    test_results = await klaveTransaction(FQDN,"testSHA_256", testInput);
 
   }
   klaveCloseConnection();

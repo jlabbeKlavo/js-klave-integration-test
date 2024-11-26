@@ -3,6 +3,7 @@ const fs = require('fs');
 const { subtle } = require('crypto').webcrypto;
 const { confidencialKeyInput, readKeyFile} = require('./utils');
 const { execSync } = require('child_process');
+import {APP_ID, FQDN} from './klave_network.js';
 
 //wasm to deploy must be copied post generation coming from yarn build command
 const WASM_TESTKLAVESDK = './config/wasm/testklavesdk_b64';
@@ -19,15 +20,13 @@ const testOpenSslImportAESPrivateKey = async () => {
     let user_connected = await klaveOpenConnection();
     if (user_connected)
     {
-      let app_id = "a5ab301a-b1a1-453e-b012-dcb83a11748a";
-      let fqdn = "e2314c9c.a5ab301a.confidencial-app.nicolas.klave.network";
       //deploy the app
       let wasm_bytes_b64 = (fs.readFileSync(WASM_TESTKLAVESDK)).toString();
-      await klaveDeployApp(app_id, fqdn, wasm_bytes_b64);
+      await klaveDeployApp(APP_ID, FQDN, wasm_bytes_b64);
 
       // //add some kredits to the app
       let kredits = 10000000000;
-      await klaveAddKredits(app_id, kredits);
+      await klaveAddKredits(APP_ID, kredits);
 
       const usages = new Uint8Array(2);
       usages[0] = 0; // decrypt
@@ -54,7 +53,7 @@ const testOpenSslImportAESPrivateKey = async () => {
       //let keyPair = {"privateKey":privateKeyb64,"publicKey":""};
 
       //test service info      
-      let serviceInfoResult = klaveQuery(fqdn, "getServiceInfo", {});
+      let serviceInfoResult = klaveQuery(FQDN, "getServiceInfo", {});
 
       let keyName = "keyOpenSsl";
       //format is 2, algorithm is 0, extractable is 0
@@ -62,14 +61,14 @@ const testOpenSslImportAESPrivateKey = async () => {
       // let argsKeyInput = confidencialKeyInput(keyName, privateKeyb64);
       // let argsKeyInput = {"keyName":keyName, "privateKey":privateKeyb64};
       // let argsKeyInput = {"privateKey":privateKeyb64};      
-      let import_results = klaveTransaction(fqdn,"importDeMerde",argsKeyInput);
+      let import_results = klaveTransaction(FQDN,"importDeMerde",argsKeyInput);
 
       // let argsKeyOk = {"privKey":"blabla"};
-      // let testOk_request = klaveQuery(fqdn,"testOk",argsKeyOk);
+      // let testOk_request = klaveQuery(FQDN,"testOk",argsKeyOk);
       // let ok_results = await applyTransaction(testOk_request);
 
       let argsKeyNok = {"privateKey":"blablabla"};      
-      let nok_results = klaveQuery(fqdn,"testNok",argsKeyNok);
+      let nok_results = klaveQuery(FQDN,"testNok",argsKeyNok);
 
       //delete the test folder
       fs.readdirSync(LOCAL_TEST_DIR).forEach(f => fs.rmSync(`${LOCAL_TEST_DIR}/${f}`));
@@ -77,7 +76,7 @@ const testOpenSslImportAESPrivateKey = async () => {
       //sign with the imported private key
       let dataToSign = "Hello World";
       let argsSignInput = {"keyName":keyName,"input":dataToSign};      
-      let signature = klaveQuery(fqdn,"ecdsaSign",argsSignInput);
+      let signature = klaveQuery(FQDN,"ecdsaSign",argsSignInput);
       console.log('Signature: ', signature);
       try {
         fs.writeFileSync(LOCAL_TEST_DIR + '/signature.txt', signature.value, { flag: 'w' });

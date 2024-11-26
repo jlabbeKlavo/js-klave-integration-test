@@ -9,6 +9,8 @@ const KLAVE_CONNECTION_KEYPAIR = './config/connectionKeys/klave1.secretarium';
 //key password provided below just for test purpose !!!!!!!!!!!!!!!!
 const KLAVE_CONNECTION_KEYPAIR_PWD = 'klave';
 
+const APP_ID = "test-klave-sdk";
+const FQDN = "test-klave-sdk-smart-contract-1.jlabbe.klave.network";
 
 const klaveOpenConnection = async () => {
     let user_connected = await openSCP(
@@ -80,5 +82,8 @@ module.exports = {
     klaveCloseConnection,
     klaveDeployApp,
     klaveTransaction, 
-    klaveQuery
+    klaveQuery,
+    klaveAddKredits,
+    APP_ID,
+    FQDN
 }

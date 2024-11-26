@@ -181,18 +181,19 @@ export function decrypt(input: DecryptInput): void
  */
 export function digest(input: DigestInput): void
 {
-    let result = Crypto.SHA.digest(input.algorithm, String.UTF8.encode(input.clearText, true));
-    let err = result.err as Error;
-    if (err)
-    {
-        error(err.message);
-        return;
-    }
-    let output = result.data as ArrayBuffer;
-    if (output)
-    {
-        success(encode(Uint8Array.wrap(output)));
-    }
+    success(input.clearText);
+    // let result = Crypto.SHA.digest(input.algorithm, String.UTF8.encode(input.clearText, true));
+    // let err = result.err as Error;
+    // if (err)
+    // {
+    //     error(err.message);
+    //     return;
+    // }
+    // let output = result.data as ArrayBuffer;
+    // if (output)
+    // {
+    //     success(encode(Uint8Array.wrap(output)));
+    // }
 }
 
 

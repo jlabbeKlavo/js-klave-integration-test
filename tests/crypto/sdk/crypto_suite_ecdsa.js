@@ -1,18 +1,16 @@
-const { klaveDeployApp, klaveTransaction, klaveQuery, klaveCloseConnection, klaveOpenConnection } = require('../../../klave_network');
+const { klaveDeployApp, klaveTransaction, klaveQuery, klaveCloseConnection, klaveOpenConnection, APP_ID, FQDN } = require('../../../klave_network');
 const { base64ToArrayBuffer, getMessageEncoding, arrayBufferToBase64 } = require('../../../utils');
 const { subtle } = require('crypto').webcrypto;
 
 //wasm to deploy must be copied post generation coming from yarn build command
-const app_id = "test_sdk";
-const fqdn = "test_sdk_smart_contract_2";
-const WASM_TESTKLAVESDK = './config/wasm/testklavesdk_b64';
+const WASM_TESTKLAVESDK = './config/wasm/test-klave-sdk_b64';
 
 const deploySdkTestApp = async () => {
   let user_connected = await klaveOpenConnection();
   console.log("user_connected: ", user_connected);
   if (user_connected)
   {
-    await klaveDeployApp(app_id, fqdn, WASM_TESTKLAVESDK);
+    await klaveDeployApp(APP_ID, FQDN, WASM_TESTKLAVESDK);
   }
   klaveCloseConnection();
 }
@@ -37,7 +35,7 @@ const testECDSA_256_R1_PKCS8 = async (importKey) => {
           "usages": ["sign"]
         }
       };
-      await klaveTransaction(fqdn,"importKey", importKeyInput);
+      await klaveTransaction(FQDN,"importKey", importKeyInput);
     }
     else 
     {
@@ -52,45 +50,45 @@ const testECDSA_256_R1_PKCS8 = async (importKey) => {
           "usages": ["sign"]
         }
       };
-      await klaveTransaction(fqdn,"generateKey", generateKeyInput);
+      await klaveTransaction(FQDN,"generateKey", generateKeyInput);
     }
 
     let getPublicKeyInput = {
         "keyName":keyName,
         "format":"spki"
     };
-    let test_results = await klaveTransaction(fqdn,"getPublicKey", getPublicKeyInput);
+    let test_results = await klaveTransaction(FQDN,"getPublicKey", getPublicKeyInput);
 
     let exportKeyInput = {
         "keyName":keyName,
         "format":"pkcs8"
     };
-    test_results = await klaveTransaction(fqdn,"exportKey", exportKeyInput);
+    test_results = await klaveTransaction(FQDN,"exportKey", exportKeyInput);
 
     exportKeyInput = {
         "keyName":keyName,
         "format":"sec1"
     };
-    test_results = await klaveTransaction(fqdn,"exportKey", exportKeyInput);
+    test_results = await klaveTransaction(FQDN,"exportKey", exportKeyInput);
 
     exportKeyInput = {
         "keyName":keyName,
         "format":"spki"
     };
-    test_results = await klaveTransaction(fqdn,"exportKey", exportKeyInput);
+    test_results = await klaveTransaction(FQDN,"exportKey", exportKeyInput);
 
     signInput = {
         "keyName":keyName,
         "clearText":"HelloWorld"
     };
-    test_results = await klaveTransaction(fqdn,"sign", signInput);
+    test_results = await klaveTransaction(FQDN,"sign", signInput);
 
     verifyInput = {
         "keyName":keyName,
         "clearText":"HelloWorld",
         "signatureB64":test_results.message,
     };
-    test_results = await klaveTransaction(fqdn,"verify", verifyInput);
+    test_results = await klaveTransaction(FQDN,"verify", verifyInput);
 
 }
   klaveCloseConnection();
@@ -113,19 +111,19 @@ const testECDSA_256_R1_SPKI = async (importKey) => {
         "usages": ["verify"]
       }
     };
-    await klaveTransaction(fqdn,"importKey", importKeyInput);
+    await klaveTransaction(FQDN,"importKey", importKeyInput);
 
     let getPublicKeyInput = {
         "keyName":keyName,
         "format":"spki"
     };
-    let test_results = await klaveTransaction(fqdn,"getPublicKey", getPublicKeyInput);
+    let test_results = await klaveTransaction(FQDN,"getPublicKey", getPublicKeyInput);
 
     exportKeyInput = {
         "keyName":keyName,
         "format":"spki"
     };
-    test_results = await klaveTransaction(fqdn,"exportKey", exportKeyInput);
+    test_results = await klaveTransaction(FQDN,"exportKey", exportKeyInput);
 }
   klaveCloseConnection();
 }
@@ -150,7 +148,7 @@ const testECDSA_384_R1_PKCS8 = async (importKey) => {
           "usages": ["sign"]
         }
       };
-      await klaveTransaction(fqdn,"importKey", importKeyInput);
+      await klaveTransaction(FQDN,"importKey", importKeyInput);
     }
     else 
     {
@@ -165,45 +163,45 @@ const testECDSA_384_R1_PKCS8 = async (importKey) => {
           "usages": ["sign"]
         }
       };
-      await klaveTransaction(fqdn,"generateKey", generateKeyInput);
+      await klaveTransaction(FQDN,"generateKey", generateKeyInput);
     }
 
     let getPublicKeyInput = {
       "keyName":keyName,
       "format":"spki"
     };
-    test_results = await klaveTransaction(fqdn,"getPublicKey", getPublicKeyInput);
+    test_results = await klaveTransaction(FQDN,"getPublicKey", getPublicKeyInput);
 
     let exportKeyInput = {
         "keyName":keyName,
         "format":"pkcs8"
     };
-    test_results = await klaveTransaction(fqdn,"exportKey", exportKeyInput);
+    test_results = await klaveTransaction(FQDN,"exportKey", exportKeyInput);
 
     exportKeyInput = {
         "keyName":keyName,
         "format":"sec1"
     };
-    test_results = await klaveTransaction(fqdn,"exportKey", exportKeyInput);
+    test_results = await klaveTransaction(FQDN,"exportKey", exportKeyInput);
 
     exportKeyInput = {
         "keyName":keyName,
         "format":"spki"
     };
-    test_results = await klaveTransaction(fqdn,"exportKey", exportKeyInput);
+    test_results = await klaveTransaction(FQDN,"exportKey", exportKeyInput);
 
     signInput = {
         "keyName":keyName,
         "clearText":"HelloWorld"
     };
-    test_results = await klaveTransaction(fqdn,"sign", signInput);
+    test_results = await klaveTransaction(FQDN,"sign", signInput);
 
     verifyInput = {
         "keyName":keyName,
         "clearText":"HelloWorld",
         "signatureB64":test_results.message,
     };
-    test_results = await klaveTransaction(fqdn,"verify", verifyInput);
+    test_results = await klaveTransaction(FQDN,"verify", verifyInput);
 
 }
   klaveCloseConnection();
@@ -229,7 +227,7 @@ const testECDSA_521_R1_PKCS8 = async (importKey) => {
           "usages": ["sign"]
         }
       };
-      await klaveTransaction(fqdn,"importKey", importKeyInput);
+      await klaveTransaction(FQDN,"importKey", importKeyInput);
     }
     else 
     {
@@ -244,45 +242,45 @@ const testECDSA_521_R1_PKCS8 = async (importKey) => {
           "usages": ["sign"]
         }
       };
-      await klaveTransaction(fqdn,"generateKey", generateKeyInput);
+      await klaveTransaction(FQDN,"generateKey", generateKeyInput);
     }
 
     let getPublicKeyInput = {
       "keyName":keyName,
       "format":"spki"
     };
-    test_results = await klaveTransaction(fqdn,"getPublicKey", getPublicKeyInput);
+    test_results = await klaveTransaction(FQDN,"getPublicKey", getPublicKeyInput);
 
     let exportKeyInput = {
         "keyName":keyName,
         "format":"pkcs8"
     };
-    test_results = await klaveTransaction(fqdn,"exportKey", exportKeyInput);
+    test_results = await klaveTransaction(FQDN,"exportKey", exportKeyInput);
 
     exportKeyInput = {
         "keyName":keyName,
         "format":"sec1"
     };
-    test_results = await klaveTransaction(fqdn,"exportKey", exportKeyInput);
+    test_results = await klaveTransaction(FQDN,"exportKey", exportKeyInput);
 
     exportKeyInput = {
         "keyName":keyName,
         "format":"spki"
     };
-    test_results = await klaveTransaction(fqdn,"exportKey", exportKeyInput);
+    test_results = await klaveTransaction(FQDN,"exportKey", exportKeyInput);
 
     signInput = {
         "keyName":keyName,
         "clearText":"HelloWorld"
     };
-    test_results = await klaveTransaction(fqdn,"sign", signInput);
+    test_results = await klaveTransaction(FQDN,"sign", signInput);
 
     verifyInput = {
         "keyName":keyName,
         "clearText":"HelloWorld",
         "signatureB64":test_results.message,
     };
-    test_results = await klaveTransaction(fqdn,"verify", verifyInput);
+    test_results = await klaveTransaction(FQDN,"verify", verifyInput);
 
 }
   klaveCloseConnection();
@@ -308,7 +306,7 @@ const testECDSA_256_K1_PKCS8 = async (importKey) => {
           "usages": ["sign"]
         }
       };
-      await klaveTransaction(fqdn,"importKey", importKeyInput);
+      await klaveTransaction(FQDN,"importKey", importKeyInput);
     }
     else 
     {
@@ -323,45 +321,45 @@ const testECDSA_256_K1_PKCS8 = async (importKey) => {
           "usages": ["sign"]
         }
       };
-      await klaveTransaction(fqdn,"generateKey", generateKeyInput);
+      await klaveTransaction(FQDN,"generateKey", generateKeyInput);
     }
 
     let getPublicKeyInput = {
         "keyName":keyName,
         "format":"spki"
     };
-    let test_results = await klaveTransaction(fqdn,"getPublicKey", getPublicKeyInput);
+    let test_results = await klaveTransaction(FQDN,"getPublicKey", getPublicKeyInput);
 
     let exportKeyInput = {
         "keyName":keyName,
         "format":"pkcs8"
     };
-    test_results = await klaveTransaction(fqdn,"exportKey", exportKeyInput);
+    test_results = await klaveTransaction(FQDN,"exportKey", exportKeyInput);
 
     exportKeyInput = {
         "keyName":keyName,
         "format":"sec1"
     };
-    test_results = await klaveTransaction(fqdn,"exportKey", exportKeyInput);
+    test_results = await klaveTransaction(FQDN,"exportKey", exportKeyInput);
 
     exportKeyInput = {
         "keyName":keyName,
         "format":"spki"
     };
-    test_results = await klaveTransaction(fqdn,"exportKey", exportKeyInput);
+    test_results = await klaveTransaction(FQDN,"exportKey", exportKeyInput);
 
     signInput = {
         "keyName":keyName,
         "clearText":"HelloWorld"
     };
-    test_results = await klaveTransaction(fqdn,"sign", signInput);
+    test_results = await klaveTransaction(FQDN,"sign", signInput);
 
     verifyInput = {
         "keyName":keyName,
         "clearText":"HelloWorld",
         "signatureB64":test_results.message,
     };
-    test_results = await klaveTransaction(fqdn,"verify", verifyInput);
+    test_results = await klaveTransaction(FQDN,"verify", verifyInput);
 
 }
   klaveCloseConnection();
@@ -396,38 +394,38 @@ const testSC_Generate_Klave_Import_Sign_SC_Verify = async () => {
           "usages": ["sign"]
         }
       };
-      await klaveTransaction(fqdn,"importKey", importKeyInput);
+      await klaveTransaction(FQDN,"importKey", importKeyInput);
 
     let getPublicKeyInput = {
         "keyName":keyName,
         "format":"spki"
     };
-    let test_results = await klaveTransaction(fqdn,"getPublicKey", getPublicKeyInput);
+    let test_results = await klaveTransaction(FQDN,"getPublicKey", getPublicKeyInput);
 
     let exportKeyInput = {
         "keyName":keyName,
         "format":"pkcs8"
     };
-    test_results = await klaveTransaction(fqdn,"exportKey", exportKeyInput);
+    test_results = await klaveTransaction(FQDN,"exportKey", exportKeyInput);
 
     exportKeyInput = {
         "keyName":keyName,
         "format":"sec1"
     };
-    test_results = await klaveTransaction(fqdn,"exportKey", exportKeyInput);
+    test_results = await klaveTransaction(FQDN,"exportKey", exportKeyInput);
 
     exportKeyInput = {
         "keyName":keyName,
         "format":"spki"
     };
-    test_results = await klaveTransaction(fqdn,"exportKey", exportKeyInput);
+    test_results = await klaveTransaction(FQDN,"exportKey", exportKeyInput);
 
     let message = "HelloWorld";
     signInput = {
         "keyName":keyName,
         "clearText":message
     };
-    test_results = await klaveTransaction(fqdn,"sign", signInput);
+    test_results = await klaveTransaction(FQDN,"sign", signInput);
     let signatureB64 = test_results.message;
 
     verifyInput = {
@@ -435,7 +433,7 @@ const testSC_Generate_Klave_Import_Sign_SC_Verify = async () => {
         "clearText":message,
         "signatureB64":signatureB64,
     };
-    test_results = await klaveTransaction(fqdn,"verify", verifyInput);
+    test_results = await klaveTransaction(FQDN,"verify", verifyInput);
 
     let result = await subtle.verify(
       {
@@ -479,31 +477,31 @@ const testSC_Generate_Sign_Klave_Import_Verify = async (deployApp) => {
           "usages": ["verify"]
         }
       };
-      await klaveTransaction(fqdn,"importKey", importKeyInput);
+      await klaveTransaction(FQDN,"importKey", importKeyInput);
 
     let getPublicKeyInput = {
         "keyName":keyName,
         "format":"spki"
     };
-    let test_results = await klaveTransaction(fqdn,"getPublicKey", getPublicKeyInput);
+    let test_results = await klaveTransaction(FQDN,"getPublicKey", getPublicKeyInput);
 
     let exportKeyInput = {
         "keyName":keyName,
         "format":"pkcs8"
     };
-    test_results = await klaveTransaction(fqdn,"exportKey", exportKeyInput);
+    test_results = await klaveTransaction(FQDN,"exportKey", exportKeyInput);
 
     exportKeyInput = {
         "keyName":keyName,
         "format":"sec1"
     };
-    test_results = await klaveTransaction(fqdn,"exportKey", exportKeyInput);
+    test_results = await klaveTransaction(FQDN,"exportKey", exportKeyInput);
 
     exportKeyInput = {
         "keyName":keyName,
         "format":"spki"
     };
-    test_results = await klaveTransaction(fqdn,"exportKey", exportKeyInput);
+    test_results = await klaveTransaction(FQDN,"exportKey", exportKeyInput);
 
     let message = "HelloWorld";
     test_results = await subtle.sign(
@@ -521,7 +519,7 @@ const testSC_Generate_Sign_Klave_Import_Verify = async (deployApp) => {
         "clearText":message,
         "signatureB64":arrayBufferToBase64(test_results),
     };
-    test_results = await klaveTransaction(fqdn,"verify", verifyInput);
+    test_results = await klaveTransaction(FQDN,"verify", verifyInput);
 
     let result = await subtle.verify(
       {

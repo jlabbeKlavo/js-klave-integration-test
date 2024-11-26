@@ -1,6 +1,5 @@
-const { klaveTransaction, klaveCloseConnection, klaveOpenConnection } = require('../../../klave_network');
+const { klaveTransaction, klaveCloseConnection, klaveOpenConnection, FQDN } = require('../../../klave_network');
 
-const fqdn = "test_sdk_smart_contract_2";
 
 const testSHA_256 = async () => {
   let user_connected = await klaveOpenConnection();
@@ -11,7 +10,7 @@ const testSHA_256 = async () => {
       "algorithm":"sha2-256",
       "clearText":"HelloWorld"
     };
-    test_results = await klaveTransaction(fqdn,"digest", digestInput);
+    test_results = await klaveTransaction(FQDN,"digest", digestInput);
   }
   klaveCloseConnection();
 }
@@ -25,7 +24,7 @@ const testSHA_384 = async () => {
         "algorithm":"sha384",
         "clearText":"HelloWorld"
       };
-      test_results = await klaveTransaction(fqdn,"digest", digestInput);  
+      test_results = await klaveTransaction(FQDN,"digest", digestInput);  
     }
     klaveCloseConnection();
   }
@@ -38,7 +37,7 @@ const testSHA_384 = async () => {
         "algorithm":"sha512",
         "clearText":"HelloWorld"
       };
-      test_results = await klaveTransaction(fqdn,"digest", digestInput);  
+      test_results = await klaveTransaction(FQDN,"digest", digestInput);  
   }
   klaveCloseConnection();
 }
@@ -52,7 +51,7 @@ const testSHA3_256 = async () => {
       "algorithm":"sha3-256",
       "clearText":"HelloWorld"
     };
-    test_results = await klaveTransaction(fqdn,"digest", digestInput);
+    test_results = await klaveTransaction(FQDN,"digest", digestInput);
   }
   klaveCloseConnection();
 }
@@ -66,7 +65,7 @@ const testSHA3_384 = async () => {
       "algorithm":"sha3-384",
       "clearText":"HelloWorld"
     };
-    test_results = await klaveTransaction(fqdn,"digest", digestInput);  
+    test_results = await klaveTransaction(FQDN,"digest", digestInput);  
   }
   klaveCloseConnection();
 }
@@ -80,7 +79,7 @@ const testSHA3_512 = async () => {
       "algorithm":"sha3-512",
       "clearText":"HelloWorld"
     };
-    test_results = await klaveTransaction(fqdn,"digest", digestInput);  
+    test_results = await klaveTransaction(FQDN,"digest", digestInput);  
   }
   klaveCloseConnection();
 }

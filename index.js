@@ -3,6 +3,7 @@ const { testECDSA_256_R1_PKCS8, testECDSA_384_R1_PKCS8, testECDSA_521_R1_PKCS8, 
 const { testAES_128 } = require('./tests/crypto/sdk/crypto_suite_aes');
 const { testSHA_256, testSHA_384, testSHA_512, testSHA3_256, testSHA3_384, testSHA3_512 } = require('./tests/crypto/sdk/crypto_suite_sha');
 const { testHTTPS_RandomNumber, testHTTPS_BitcoinPrice } = require('./tests/crypto/sdk/https_suite');
+const { klaveAddKredits } = require('./klave_network');
 
 const deployApp = true;
 const doNotDeployApp = false;
@@ -10,7 +11,7 @@ const importKey = true;
 const generateKey = false;
 
 const runTests = async () => {
-  // await deploySdkTestApp();
+  await deploySdkTestApp();
 
   // await testRunCmdCryptoSDKApp();
 

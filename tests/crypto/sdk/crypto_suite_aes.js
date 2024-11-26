@@ -1,6 +1,6 @@
 const { klaveTransaction, klaveCloseConnection, klaveOpenConnection } = require('../../../klave_network');
 
-const fqdn = "test_sdk_smart_contract_2";
+const fqdn = "test-klave-sdk-smart-contract-1.jlabbe.klave.network";
 
 const testAES_128 = async () => {
   let user_connected = await klaveOpenConnection();
@@ -17,26 +17,26 @@ const testAES_128 = async () => {
         "usages": ["encrypt", "decrypt"]
       }
     };
-    let test_results = await klaveTransaction(fqdn,"generateKey", generateKeyInput);
+    let test_results = await klaveTransaction(FQDN,"generateKey", generateKeyInput);
 
     let exportKeyInput = {
         "keyName":"AES_128_RAW_Key1",
         "format":"raw"
     };
-    test_results = await klaveTransaction(fqdn,"exportKey", exportKeyInput);
+    test_results = await klaveTransaction(FQDN,"exportKey", exportKeyInput);
 
     let encryptInput = {
       "keyName":"AES_128_RAW_Key1",
       "clearText":"HelloWorld"
     };
-    test_results = await klaveTransaction(fqdn,"encrypt", encryptInput);
+    test_results = await klaveTransaction(FQDN,"encrypt", encryptInput);
 
     let decryptInput = {
       "keyName":"AES_128_RAW_Key1",
       "cipherTextB64":test_results.message
     };
 
-    test_results = await klaveTransaction(fqdn,"decrypt", decryptInput);
+    test_results = await klaveTransaction(FQDN,"decrypt", decryptInput);
 
 }
   klaveCloseConnection();

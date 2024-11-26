@@ -1,0 +1,20 @@
+{
+    "name": "klave-tests-app",
+    "description": "This is a test application for the Klave Network features",
+    "author": "Jeremie <jeremie@secretarium.org> (https://github.com/jlabbeKlavo)",
+    "version": "0.0.0",
+    "license": "MIT",
+    "repository": "",
+    "scripts": {
+        "build": "stac ."
+    },
+    "devDependencies": {
+        "@klave/sdk": "0.13.0-dev.23",
+        "as-base64": "^0.2.0",
+        "assemblyscript": "^0.27.26",
+        "path-complete-extname": "^1.0.0",
+        "tslib": "^2.6.2",
+        "visitor-as": "^0.11.4",
+        "zod": "^3.22.4"
+    }
+}
